@@ -7,12 +7,10 @@ keep_md: true
 
 
 ## Loading and preprocessing the data
+;
 ```{r}
-
 setwd("C:/before_it_breaks/coursera/RepData_PeerAssessment1")
-
 activity <- read.csv("activity/activity.csv") 
-
 str(activity)
 head(activity)
 ```
@@ -32,7 +30,7 @@ print(steps_per_day)
 ```
 
 Make a histogram of the total number of steps taken each day
-```{r}
+```{r echo= TRUE}
 hist(steps_per_day$steps, 
      breaks=20,
      main="Steps Per Day", 
@@ -57,6 +55,7 @@ colnames(steps_per_interval) <- c("interval", "steps")
 
 plot(x = steps_per_interval$interval, 
      y = steps_per_interval$steps, 
+     type = "l",
      xlab = "Time - 5 min Intervals", 
      ylab = "Number of Steps", 
      main = "Average Daily Activity Pattern")
@@ -80,7 +79,6 @@ count_nas <- sum(is.na(activity$steps))
 Create a new dataset that is equal to the original dataset but with the missing data filled in.
 
 ```{r}
-
 activity2 <- activity
 activity2$steps[which(is.na(activity2$steps))] <- mean(steps_per_interval$steps)
 
@@ -88,7 +86,7 @@ activity2$steps[which(is.na(activity2$steps))] <- mean(steps_per_interval$steps)
 
 Make a histogram of the total number of steps taken each day 
 
-```{r}
+```{r echo= TRUE}
 steps_per_day2 <- aggregate(activity2$steps, list(activity2$date), sum)
 colnames(steps_per_day2) <- c("date", "steps")
 print(steps_per_day2)
@@ -121,8 +119,6 @@ define dates as weekday and weekend
 ```{r}
 
 activity1$date <- as.POSIXct(activity1$date) 
-
-
 activity1$week <- ifelse(weekdays(activity1$date) == "Saturday" | weekdays(activity1$date) == "Sunday" ,"weekend","weekday")
 
 ```
@@ -144,20 +140,24 @@ names(weekday_spd) = c("day_type", "interval","mean_steps")
 
 plot both the weekend and weekday sets
 
-```{r}
+```{r echo= TRUE}
+
+par(mfrow = c(2,1))
 
 plot(x = weekday_spd$interval, 
      y = weekday_spd$mean_steps, 
+     type = "l",
      xlab = "Time - 5 min Intervals", 
      ylab = "Number of Steps", 
-     main = "Average Daily Activity Pattern - weekday")
+     main = "Weekdays")
 
 
 plot(x = weekend_spd$interval, 
      y = weekend_spd$mean_steps, 
+     type = "l",
      xlab = "Time - 5 min Intervals", 
      ylab = "Number of Steps", 
-     main = "Average Daily Activity Pattern - weekend")
+     main = "Weekends")
 
 ```
 
