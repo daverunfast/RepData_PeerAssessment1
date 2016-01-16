@@ -1,10 +1,9 @@
 ---
 title: "Reproducible Research: Peer Assessment 1"
 output: 
-html_document:
+html_document: PA1_template.html
 keep_md: true
 ---
-
 
 ## Loading and preprocessing the data
 ;
@@ -26,7 +25,7 @@ Calculate the total number of steps taken per day
 ```{r}
 steps_per_day <- aggregate(activity1$steps, list(activity1$date), sum)
 colnames(steps_per_day) <- c("date", "steps")
-print(steps_per_day)
+mean(steps_per_day)
 ```
 
 Make a histogram of the total number of steps taken each day
@@ -74,6 +73,7 @@ print(max_steps_interval)
 Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)
 ```{r}
 count_nas <- sum(is.na(activity$steps))
+print(count_nas)
 ```
 
 Create a new dataset that is equal to the original dataset but with the missing data filled in.
@@ -162,4 +162,8 @@ plot(x = weekend_spd$interval,
 ```
 
 
+
+```{r}
+
+```
 
